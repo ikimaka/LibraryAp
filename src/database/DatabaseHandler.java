@@ -1,16 +1,12 @@
 package database;
 
-import alert.AlertMaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import listbook.BookListController;
 import listmember.MemberListController;
 
 import java.sql.*;
-import java.util.Optional;
 
 public class DatabaseHandler {
     private static DatabaseHandler handler = null;
