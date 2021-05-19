@@ -1,0 +1,132 @@
+* {
+    -fx-primary: #2a2e37;
+    -fx-secondary: #ffff8d;
+    -fx-primarytext: #b2b2b2;
+    -fx-red: #FF0000;
+    -fx-blue: #1976D2;
+}
+.root {
+    -fx-background-color: -fx-primary;
+}
+
+.glyph-icon {
+    -fx-fill: -fx-primarytext;
+}
+
+.button {
+    -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-secondary;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 13pt;
+}
+
+.button:hover {
+    -fx-border-color: -fx-secondary;
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+.text-field {
+    -fx-text-fill: -fx-primarytext;
+    -fx-font-size: 12pt;
+    -jfx-focus-color: -fx-secondary;
+}
+
+.wrong-credentials {
+    -jfx-unfocus-color: #ef5350;
+    -jfx-focus-color: #ef5350;
+}
+
+.tab {
+    -fx-background-color: -fx-primary;
+    -fx-pref-width: 350;
+    -fx-pref-height: 60;
+}
+
+.tab-header-background {
+    -fx-background-color: -fx-primary;
+}
+
+.menu-bar {
+    -fx-base: -fx-primary;
+    -fx-background-color: -fx-primary;
+}
+
+.context-menu {
+    -fx-background-color: derive(-fx-primary, 20%);
+}
+
+.jfx-hamburger-icon {
+    -fx-spacing: 7;
+}
+
+.jfx-hamburger-icon StackPane {
+    -fx-background-color: -fx-secondary;
+    -fx-background-radius: 5px;
+}
+
+.tool-bar-button {
+    -fx-background-color: derive(-fx-primary, 20%);
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-border-color: -fx-primary;
+}
+
+.tool-bar-button:hover {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+.tool-bar-button:hover .glyph-icon {
+    -fx-fill: -fx-primary;
+}
+
+.main-text {
+    -fx-fill: -fx-secondary;
+    -fx-font-size: 14pt;
+}
+
+.submission-container {
+    -fx-background-color: derive(-fx-primary, 10%);
+}
+
+.dialog-button {
+    -fx-background-color: -fx-blue;
+    -fx-border-color: -fx-blue;
+    -fx-text-fill: white;
+}
+
+.dialog-button:hover {
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-primary;
+    -fx-text-fill: white;
+}
+
+.jfx-layout-actions {
+    -fx-hgap: 8;
+}
+
+.data0.chart-pie {
+    -fx-pie-color: -fx-secondary;
+    -fx-border-color: derive(-fx-secondary, -30%);
+}
+
+.data1.chart-pie {
+    -fx-pie-color: -fx-blue;
+    -fx-border-color: derive(-fx-blue, -30%);
+}
+
+.chart-pie-label {
+    -fx-fill: -fx-secondary;
+}
+
+
+
+
+
+
+
+
+
