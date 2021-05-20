@@ -163,12 +163,12 @@
                                              <bottom>
                                                 <HBox alignment="CENTER" prefHeight="63.0" prefWidth="573.0" BorderPane.alignment="TOP_LEFT">
                                                    <children>
-                                                      <Button fx:id="renewButton" disable="true" mnemonicParsing="false" onAction="#loadRenewOperation" prefWidth="150.0" stylesheets="@main.css" text="Renew">
+                                                      <Button fx:id="renewButton" disable="true" mnemonicParsing="false" onAction="#loadRenewOperation" prefWidth="150.0" text="Renew">
                                                          <HBox.margin>
                                                             <Insets right="20.0" />
                                                          </HBox.margin>
                                                       </Button>
-                                                      <Button fx:id="submissionButton" disable="true" mnemonicParsing="false" onAction="#loadSubmissionOp" prefWidth="150.0" stylesheets="@main.css" text="Submission" />
+                                                      <Button fx:id="submissionButton" disable="true" mnemonicParsing="false" onAction="#loadSubmissionOp" prefWidth="150.0" text="Submission" />
                                                    </children>
                                                 </HBox>
                                              </bottom>
