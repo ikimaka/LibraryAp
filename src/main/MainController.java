@@ -41,6 +41,11 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 public class MainController implements Initializable {
+    private static final String BOOK_NOT_AVAILABLE = "Not Available";
+    private static final String NO_SUCH_BOOK_AVAILABLE = "No Such Book Available";
+    private static final String NO_SUCH_MEMBER_AVAILABLE = "No Such Member Available";
+    private static final String BOOK_AVAILABLE = "Available";
+
     @FXML private TextField bookIdInput;
     @FXML private Button renewButton;
     @FXML private Button submissionButton;
@@ -56,7 +61,9 @@ public class MainController implements Initializable {
     @FXML private AnchorPane rootAnchorPane;
     @FXML private StackPane bookInfoContainer;
     @FXML private StackPane memberInfoContainer;
+    @FXML private JFXTabPane mainTabPane;
     @FXML private Tab bookIssueTab;
+    @FXML private Tab renewTab;
     @FXML private JFXHamburger hamburger;
     @FXML private JFXDrawer drawer;
     private Boolean isReadyForSubmission = false;
@@ -74,6 +81,24 @@ public class MainController implements Initializable {
     DatabaseHandler databaseHandler;
 
     @FXML private void loadIssueOperation(ActionEvent event) {
+        if (checkForIssueValidity()) {
+            JFXButton btn = new JFXButton("Okay!");
+            AlertMaker.showMaterialDialog(rootPane, rootAnchorPane, Arrays.asList(btn), "Invalid Input", null);
+            return;
+        }
+        if (bookStatus.getText().equals(BOOK_NOT_AVAILABLE)) {
+            JFXButton btn = new JFXButton("Okay!");
+            JFXButton viewDetails = new JFXButton("View Details");
+            viewDetails.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e)->{
+                String bookToBeLoaded = bookIdInput.getText();
+                bookID.setText(bookToBeLoaded);
+                mainTabPane.getSelectionModel().select(renewTab);
+                bookID.fireEvent(new ActionEvent());
+            });
+            AlertMaker.showMaterialDialog(rootPane, rootAnchorPane, Arrays.asList(btn, viewDetails), "Already issued book", "This book is already issued. Cant process issue request");
+            return;
+        }
+
         String memberID = memberIdInput.getText();
         String bookID = bookIdInput.getText();
 
@@ -118,7 +143,7 @@ public class MainController implements Initializable {
                 flag = true;
             }
             if (!flag) {
-                memberName.setText("No such member is availible");
+                memberName.setText(NO_SUCH_MEMBER_AVAILABLE);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -140,12 +165,12 @@ public class MainController implements Initializable {
                 Boolean bStatus = rs.getBoolean("isAvail");
                 bookName.setText(bName);
                 bookAuthor.setText(bAuthor);
-                String status = (bStatus) ? "Availible" : "Non Availible";
+                String status = (bStatus) ? BOOK_AVAILABLE : BOOK_NOT_AVAILABLE;
                 bookStatus.setText(status);
                 flag = true;
             }
             if (!flag) {
-                bookName.setText("No such book is availible");
+                bookName.setText(NO_SUCH_BOOK_AVAILABLE);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -373,6 +398,14 @@ public class MainController implements Initializable {
     private void refreshGraphs() {
         bookChart.setData(databaseHandler.getBookGraphStatistics());
         memberChart.setData(databaseHandler.getMemberGraphStatistics());
+    }
+
+    private boolean checkForIssueValidity() {
+        bookIdInput.fireEvent(new ActionEvent());
+        memberIdInput.fireEvent(new ActionEvent());
+        return bookIdInput.getText().isEmpty() || memberIdInput.getText().isEmpty()
+                || memberName.getText().isEmpty() || bookName.getText().isEmpty()
+                || bookName.getText().equals(NO_SUCH_BOOK_AVAILABLE) || memberName.getText().equals(NO_SUCH_MEMBER_AVAILABLE);
     }
 
     @Override
