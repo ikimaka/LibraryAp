@@ -51,16 +51,21 @@ public class MemberAddController implements Initializable {
                 ")";
         System.out.println(st);
         if(handler.execAction(st)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Success");
-            alert.showAndWait();
+            AlertMaker.showSimpleAlert("New Member Added", mName + " has been added");
+            clearEntries();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Failed");
             alert.showAndWait();
         }
+    }
+
+    private void clearEntries() {
+        name.clear();
+        id.clear();
+        mobile.clear();
+        email.clear();
     }
 
     private void handleUpdateMember() {

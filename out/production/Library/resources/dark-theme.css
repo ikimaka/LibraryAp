@@ -68,10 +68,10 @@
 }
 
 .tool-bar-button {
-    -fx-background-color: derive(-fx-primary, 20%);
+    -fx-border-color: transparent;
+    -fx-background-color: derive(-fx-primary, 10%);
     -fx-border-radius: 0px;
     -fx-background-radius: 0px;
-    -fx-border-color: -fx-primary;
 }
 
 .tool-bar-button:hover {
@@ -114,12 +114,12 @@
 }
 
 .data1.chart-pie {
-    -fx-pie-color: -fx-blue;
-    -fx-border-color: derive(-fx-blue, -30%);
+    -fx-pie-color: derive(-fx-primary, 30%);
+    -fx-border-color: derive(-fx-primary, 30%);
 }
 
 .chart-pie-label {
-    -fx-fill: -fx-secondary;
+    -fx-fill : derive(-fx-secondary, -5%);
 }
 
 .about-text{
@@ -167,8 +167,13 @@
     -fx-border-color: transparent;
     -fx-table-cell-border-color: transparent;
 }
-.table-row-cell:odd{
-    -fx-background-color: derive(-fx-primary, 20%);
+
+.table-column{
+    -fx-alignment: CENTER;
+}
+
+.table-row-cell:even{
+    -fx-background-color: derive(-fx-primary, 10%);
 }
 .table-row-cell:selected {
     -fx-background-color: -fx-secondary;

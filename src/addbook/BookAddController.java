@@ -51,16 +51,21 @@ public class BookAddController implements Initializable {
                 ")";
         //System.out.println(qu);
         if (databaseHandler.execAction(qu)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Success");
-            alert.showAndWait();
+            AlertMaker.showSimpleAlert("New book added", "The book " + bookName + " was added");
+            clearEntries();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Failed");
             alert.showAndWait();
         }
+    }
+
+    private void clearEntries() {
+        title.clear();
+        id.clear();
+        author.clear();
+        publisher.clear();
     }
 
     private void handleEditOperation() {

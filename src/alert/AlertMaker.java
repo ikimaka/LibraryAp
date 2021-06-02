@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import util.LibraryAssistantUtil;
 
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class AlertMaker {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        LibraryAssistantUtil.setStageIcon(stage);
         alert.showAndWait();
     }
 

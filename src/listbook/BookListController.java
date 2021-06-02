@@ -135,14 +135,18 @@ public class BookListController implements Initializable {
         private SimpleStringProperty id;
         private SimpleStringProperty author;
         private SimpleStringProperty publisher;
-        private SimpleBooleanProperty availabilty;
+        private SimpleStringProperty availabilty;
 
         public Book (String title, String id, String author, String pub, Boolean avail) {
             this.title = new SimpleStringProperty(title);
             this.id = new SimpleStringProperty(id);
             this.author = new SimpleStringProperty(author);
             this.publisher = new SimpleStringProperty(pub);
-            this.availabilty = new SimpleBooleanProperty(avail);
+            if (avail) {
+                this.availabilty = new SimpleStringProperty("Available");
+            } else {
+                this.availabilty = new SimpleStringProperty("Issued");
+            }
         }
 
         public String getId() {
@@ -157,7 +161,7 @@ public class BookListController implements Initializable {
         public String getPublisher() {
             return publisher.get();
         }
-        public boolean getAvailabilty() {
+        public String getAvailabilty() {
             return availabilty.get();
         }
     }

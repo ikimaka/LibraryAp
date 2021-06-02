@@ -205,7 +205,7 @@
                                                       </VBox>
                                                       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="250.0" spacing="25.0" styleClass="submission-container">
                                                          <children>
-                                                            <FontAwesomeIconView glyphName="USER" size="30" />
+                                                            <FontAwesomeIconView glyphName="CALENDAR_CHECK_ALT" size="30" />
                                                             <Text fx:id="issueDateHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Issue Date Holder" />
                                                             <Text fx:id="numberDaysHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="No of Days Holder" />
                                                             <Text fx:id="fineInfoHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Fine Holder" />

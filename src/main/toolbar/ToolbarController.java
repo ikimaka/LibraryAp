@@ -36,6 +36,10 @@ public class ToolbarController implements Initializable {
         LibraryAssistantUtil.loadWindow(getClass().getResource("/settings/settings.fxml"), "Settings", null);
     }
 
+    @FXML private void loadIssuedBookList(ActionEvent event) {
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/issuedlist/issued_list.fxml"), "Issued Book List", null);
+    }
+
 
 
     @Override

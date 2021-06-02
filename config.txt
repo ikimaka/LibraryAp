@@ -1,1 +1,1 @@
-{"nDaysWithoutFine":10,"finePerDay":2.0,"username":"ikimaka","password":"40bd001563085fc35165329ea1ff5c5ecbdbbeef"}
+{"nDaysWithoutFine":4,"finePerDay":2.0,"username":"ikimaka","password":"40bd001563085fc35165329ea1ff5c5ecbdbbeef"}
