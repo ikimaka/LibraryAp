@@ -1,17 +1,28 @@
 package util;
 
+import alert.AlertMaker;
+import com.jfoenix.controls.JFXButton;
+import exportpdf.ListToPDF;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import settings.Preferences;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class LibraryAssistantUtil {
     private static final String IMAGE_LOC = "/resources/icon.png";
@@ -55,5 +66,27 @@ public class LibraryAssistantUtil {
         return DATE_FORMAT.format(date);
     }
 
+    public static void initPDFExport(StackPane rootPane, Node contentPane, Stage stage, List<List> data) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save as PDF");
+        FileChooser.ExtensionFilter extFilter
+                = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File saveLoc = fileChooser.showSaveDialog(stage);
+        ListToPDF ltp = new ListToPDF();
+        boolean flag = ltp.doPrintToPdf(data, saveLoc, ListToPDF.Orientation.LANDSCAPE);
+        JFXButton okayBtn = new JFXButton("Okay");
+        JFXButton openBtn = new JFXButton("View File");
+        openBtn.setOnAction((ActionEvent event1) -> {
+            try {
+                Desktop.getDesktop().open(saveLoc);
+            } catch (Exception exp) {
+                AlertMaker.showErrorMessage("Could not load file", "Cant load file");
+            }
+        });
+        if (flag) {
+            AlertMaker.showMaterialDialog(rootPane, contentPane, Arrays.asList(okayBtn, openBtn), "Completed", "Member data has been exported.");
+        }
+    }
 
 }

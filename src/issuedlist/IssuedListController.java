@@ -12,6 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import settings.Preferences;
 import util.LibraryAssistantUtil;
 
@@ -20,8 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class IssuedListController implements Initializable {
@@ -35,6 +37,9 @@ public class IssuedListController implements Initializable {
     @FXML private TableColumn<IssueInfo, String> issueCol;
     @FXML private TableColumn<IssueInfo, Integer> daysCol;
     @FXML private TableColumn<IssueInfo, Float> fineCol;
+
+    @FXML private StackPane rootPane;
+    @FXML private AnchorPane contentPane;
 
     private void initCol() {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -81,6 +86,34 @@ public class IssuedListController implements Initializable {
 
     @FXML private void handleRefresh(ActionEvent event) {
         loadData();
+    }
+
+    @FXML
+    private void exportAsPDF(ActionEvent event) {
+        List<List> printData = new ArrayList<>();
+        String[] headers = {"SI", "BOOK ID", "      BOOK NAME       ", "    HOLDER NAME     ", "ISSUE DATE", "DAYS ELAPSED", "FINE"};
+        printData.add(Arrays.asList(headers));
+        for (IssueInfo info : list) {
+            List<String> row = new ArrayList<>();
+            row.add(String.valueOf(info.getId()));
+            row.add(info.getBookID());
+            row.add(info.getBookName());
+            row.add(info.getHolderName());
+            row.add(info.getDateOfIssue());
+            row.add(String.valueOf(info.getDays()));
+            row.add(String.valueOf(info.getFine()));
+            printData.add(row);
+        }
+        LibraryAssistantUtil.initPDFExport(rootPane, contentPane, getStage(), printData);
+    }
+
+    @FXML
+    private void closeStage(ActionEvent event) {
+        getStage().close();
+    }
+
+    private Stage getStage() {
+        return (Stage) tableView.getScene().getWindow();
     }
 
     public static class IssueInfo {

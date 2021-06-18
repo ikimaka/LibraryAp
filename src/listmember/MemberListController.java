@@ -4,10 +4,10 @@ import addbook.BookAddController;
 import addmember.MemberAddController;
 import alert.AlertMaker;
 import database.DatabaseHandler;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,17 +18,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import listbook.BookListController;
 import util.LibraryAssistantUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MemberListController implements Initializable {
 
@@ -37,6 +37,9 @@ public class MemberListController implements Initializable {
     @FXML private TableColumn<Member, String> idCol;
     @FXML private TableColumn<Member, String> mobileCol;
     @FXML private TableColumn<Member, String> emailCol;
+
+    @FXML private StackPane rootPane;
+    @FXML private AnchorPane contentPane;
 
     ObservableList<Member> list = FXCollections.observableArrayList();
 
@@ -72,6 +75,10 @@ public class MemberListController implements Initializable {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         mobileCol.setCellValueFactory(new PropertyValueFactory<>("mobile"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+    }
+
+    @FXML private Stage getStage() {
+        return (Stage) tableView.getScene().getWindow();
     }
 
     @FXML private void handleRefresh() {
@@ -125,6 +132,26 @@ public class MemberListController implements Initializable {
         } else {
             AlertMaker.showSimpleAlert("Deletion is cancelled", "Deletion process is cancelled");
         }
+    }
+
+    @FXML
+    private void exportAsPDF(ActionEvent event) {
+        List<List> printData = new ArrayList<>();
+        String[] headers = {"   Name", "ID", "Mobile", "    Email   "};
+        printData.add(Arrays.asList(headers));
+        for (Member member : list) {
+            List<String> row = new ArrayList<>();
+            row.add(member.getName());
+            row.add(member.getId());
+            row.add(member.getMobile());
+            row.add(member.getEmail());
+            printData.add(row);
+        }
+        LibraryAssistantUtil.initPDFExport(rootPane, contentPane, getStage(), printData);
+    }
+
+    @FXML private void closeStage(ActionEvent event) {
+        getStage().close();
     }
 
     public static class Member {

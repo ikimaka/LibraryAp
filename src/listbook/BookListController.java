@@ -3,10 +3,10 @@ package listbook;
 import addbook.BookAddController;
 import alert.AlertMaker;
 import database.DatabaseHandler;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +17,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.LibraryAssistantUtil;
@@ -25,8 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class BookListController implements Initializable {
     @FXML private TableView<Book> tableView;
@@ -35,6 +36,9 @@ public class BookListController implements Initializable {
     @FXML private TableColumn<Book, String> authorCol;
     @FXML private TableColumn<Book, String> publisherCol;
     @FXML private TableColumn<Book, Boolean> availabiltyCol;
+
+    @FXML private StackPane rootPane;
+    @FXML private AnchorPane contentPane;
 
     ObservableList<Book> list = FXCollections.observableArrayList();
 
@@ -71,6 +75,10 @@ public class BookListController implements Initializable {
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
         publisherCol.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         availabiltyCol.setCellValueFactory(new PropertyValueFactory<>("availabilty"));
+    }
+
+    private Stage getStage() {
+        return (Stage) tableView.getScene().getWindow();
     }
 
     @FXML private void handleBookDeleteOption() {
@@ -128,6 +136,27 @@ public class BookListController implements Initializable {
 
     @FXML private void handleRefresh() {
         loadData();
+    }
+
+    @FXML
+    private void exportAsPDF(ActionEvent event) {
+        List<List> printData = new ArrayList<>();
+        String[] headers = {"   Title   ", "ID", "  Author  ", "  Publisher ", "Avail"};
+        printData.add(Arrays.asList(headers));
+        for (Book book : list) {
+            List<String> row = new ArrayList<>();
+            row.add(book.getTitle());
+            row.add(book.getId());
+            row.add(book.getAuthor());
+            row.add(book.getPublisher());
+            row.add(book.getAvailabilty());
+            printData.add(row);
+        }
+        LibraryAssistantUtil.initPDFExport(rootPane, contentPane, getStage(), printData);
+    }
+
+    @FXML private void closeStage(ActionEvent event) {
+        getStage().close();
     }
 
     public static class Book {
